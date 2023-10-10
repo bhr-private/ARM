@@ -1,4 +1,9 @@
 
+
+https://learn.microsoft.com/en-us/training/modules/create-azure-resource-manager-template-vs-code/1-introduction
+
+
+
 az group create \
   --name learn \
   --location "{location}"
