@@ -1,4 +1,5 @@
 {
+  
 // templateFile="Azure_ARM_Storage_deploy.json"
 // today=$(date +"%d-%b-%Y")
 // DeploymentName="addSkuParameter-"$today
