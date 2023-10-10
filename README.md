@@ -52,3 +52,4 @@ az network lb rule create \
     --resource-group learn \
     --new-capacity 4
 
+https://github.com/bhr-private/ARM/blob/main/custom_application_v1.sh
