@@ -1,22 +1,61 @@
 {
+
+// templateFile="Azure_ARM_Storage_deploy.json"
+// today=$(date +"%d-%b-%Y")
+// DeploymentName="addSkuParameter-"$today
+// az deployment group create \
+//   --name $DeploymentName \
+//   --template-file $templateFile \
+//   --parameters storageSKU=Standard_GRS storageName=storage10102023
+
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {},
+  "parameters": {
+      "storageName": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 24,
+            "metadata": {
+            "description": "Name of Azure stoarage resource"
+            }
+      },
+      // Allowed Values for Azure storage account
+      "storageSKU": {
+        "type": "string",
+        "defaultValue": "Standard_LRS",
+        "allowedValues": [
+          "Standard_LRS",
+          "Standard_GRS",
+          "Standard_RAGRS",
+          "Standard_ZRS",
+          "Premium_LRS",
+          "Premium_ZRS",
+          "Standard_GZRS",
+          "Standard_RAGZRS"
+        ]
+      }
+  },
   "functions": [],
   "variables": {},
   "resources": [{
-    "name": "storageacc011023",
+    "name": "[parameters('storageName')]",
     "type": "Microsoft.Storage/storageAccounts",
     "apiVersion": "2023-01-01",
     "tags": {
-      "displayName": "storageacc011023"
+      "displayName": "[parameters('storageName')]"
     },
     "location": "[resourceGroup().location]",
     "kind": "StorageV2",
     "sku": {
-      "name": "Standard_LRS",
+      "name": "[parameters('storageSKU')]",
       "tier": "Standard"
     }
-  }],
-  "outputs": {}
+   }
+  ],
+  "outputs": {
+    "storageEndpoint": {
+      "type": "object",
+      "value": "[reference(parameters('storageName')).primaryEndpoints]"
+    }
+  }
 }

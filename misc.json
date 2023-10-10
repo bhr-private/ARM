@@ -25,3 +25,17 @@ az deployment group create \
 
 
 az deployment group create --resource-group learn --name rollout01 --template-file azuredeploy.json 
+
+
+
+templateFile="Azure_ARM_Storage_deploy.json"
+today=$(date +"%d-%b-%Y")
+DeploymentName="addSkuParameter-"$today
+
+az deployment group create \
+  --name $DeploymentName \
+  --template-file $templateFile \
+  --parameters storageSKU=Standard_GRS storageName=storage10102023
+
+
+
