@@ -15,6 +15,8 @@ az deployment group create \
 
 https://learn.microsoft.com/en-us/training/modules/build-app-with-scale-sets/1-introduction
 
+admin-username : azureuser
+
 az group create --location westeurope --name learn
 
 az vmss create \
@@ -52,4 +54,16 @@ az network lb rule create \
     --resource-group learn \
     --new-capacity 4
 
-https://github.com/bhr-private/ARM/blob/main/custom_application_v1.sh
+az vmss extension set \
+  --publisher Microsoft.Azure.Extensions \
+  --version 2.0 \
+  --name CustomScript \
+  --resource-group learn \
+  --vmss-name webServerScaleSet \
+  --settings @vmss_script_extension.json
+
+  ssh -i ~/.ssh/id_rsa azureuser@23.97.245.144 -p 50000
+
+
+sudo find / -type f -not -type d -iname "CustomScript"
+
