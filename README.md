@@ -62,8 +62,22 @@ az vmss extension set \
   --vmss-name webServerScaleSet \
   --settings @vmss_script_extension.json
 
-  ssh -i ~/.ssh/id_rsa azureuser@23.97.245.144 -p 50000
+az vmss show \
+    --name webServerScaleSet \
+    --resource-group learn \
+    --query upgradePolicy.mode
 
+az vmss extension set \
+    --publisher Microsoft.Azure.Extensions \
+    --version 2.0 \
+    --name CustomScript \
+    --vmss-name webServerScaleSet \
+    --resource-group learn \
+    --settings "{\"commandToExecute\": \"echo This is the updated app installed on the Virtual Machine Scale Set ! > /var/www/html/index.html\"}"
+
+
+
+ssh -i ~/.ssh/id_rsa azureuser@23.97.245.144 -p 50000
 
 sudo find / -type f -not -type d -iname "CustomScript"
 
